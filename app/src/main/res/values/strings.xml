@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">My Daily Routine</string>
+    <string name="nav_home">Home</string>
+    <string name="nav_routine">My Routine</string>
+    <string name="nav_calendar">Calendar</string>
+    <string name="nav_habits">Habits</string>
+    <string name="nav_profile">Profile</string>
+    <string name="sign_in_tagline">Design calm, flexible days that adapt with you</string>
+    <string name="notification_channel_name">Routine Reminders</string>
+    <string name="notification_channel_desc">Alerts before your scheduled daily activities begin</string>
+    <string name="apk_section_title">App Package (APK)</string>
+    <string name="apk_section_subtitle">Save a backup installer (.apk) to your device or share it</string>
+    <string name="apk_download_button">Download APK</string>
+    <string name="apk_share_button">Share APK</string>
+</resources>

@@ -1,0 +1,228 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile and routine planner preferences.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Authenticated Firebase UID."
+        },
+        "displayName": {
+          "type": "string",
+          "description": "User's display name for personalized greeting."
+        },
+        "email": {
+          "type": "string",
+          "description": "User's email address."
+        },
+        "photoUrl": {
+          "type": "string",
+          "description": "Profile avatar photo URL."
+        },
+        "themeMode": {
+          "type": "string",
+          "enum": ["SYSTEM", "LIGHT", "DARK"],
+          "description": "Preferred UI theme mode."
+        },
+        "morningStartMinute": {
+          "type": "integer",
+          "description": "Preferred start of day in minutes from midnight."
+        },
+        "dayEndMinute": {
+          "type": "integer",
+          "description": "Preferred end of day in minutes from midnight."
+        },
+        "defaultBufferMinutes": {
+          "type": "integer",
+          "description": "Buffer minutes between flexible reorganized blocks."
+        },
+        "notificationsEnabled": {
+          "type": "boolean",
+          "description": "Whether routine reminders are enabled."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp of profile creation (FieldValue.serverTimestamp())."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp of last profile update (FieldValue.serverTimestamp())."
+        }
+      },
+      "required": [
+        "userId",
+        "displayName",
+        "themeMode",
+        "morningStartMinute",
+        "dayEndMinute",
+        "defaultBufferMinutes",
+        "notificationsEnabled",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "RoutineActivity": {
+      "title": "RoutineActivity",
+      "description": "A scheduled daily routine block for a specific date.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Owner Firebase UID."
+        },
+        "dateKey": {
+          "type": "string",
+          "description": "ISO local date yyyy-MM-dd."
+        },
+        "title": {
+          "type": "string",
+          "description": "Activity title."
+        },
+        "description": {
+          "type": "string",
+          "description": "Activity details or notes."
+        },
+        "category": {
+          "type": "string",
+          "enum": ["FOCUS", "HEALTH", "WELLNESS", "LEARNING", "PERSONAL", "REST"],
+          "description": "Activity category."
+        },
+        "startMinute": {
+          "type": "integer",
+          "description": "Start time in minutes from midnight (0..1439)."
+        },
+        "endMinute": {
+          "type": "integer",
+          "description": "End time in minutes from midnight (1..1440)."
+        },
+        "sortOrder": {
+          "type": "integer",
+          "description": "Drag-and-drop sequence index."
+        },
+        "completed": {
+          "type": "boolean",
+          "description": "Whether the activity has been completed."
+        },
+        "flexible": {
+          "type": "boolean",
+          "description": "Whether the time slot can be automatically adjusted."
+        },
+        "reminderEnabled": {
+          "type": "boolean",
+          "description": "Whether a local reminder notification is scheduled."
+        },
+        "reminderMinutesBefore": {
+          "type": "integer",
+          "description": "Lead time in minutes for reminder notification."
+        },
+        "status": {
+          "type": "string",
+          "enum": ["SCHEDULED", "DELAYED", "RESCHEDULED", "COMPLETED"],
+          "description": "Current schedule adjustment status."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server creation timestamp (FieldValue.serverTimestamp())."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server update timestamp (FieldValue.serverTimestamp())."
+        }
+      },
+      "required": [
+        "userId",
+        "dateKey",
+        "title",
+        "description",
+        "category",
+        "startMinute",
+        "endMinute",
+        "sortOrder",
+        "completed",
+        "flexible",
+        "reminderEnabled",
+        "reminderMinutesBefore",
+        "status",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "DailyHabit": {
+      "title": "DailyHabit",
+      "description": "A recurring daily habit tracked with completion dates and streaks.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Owner Firebase UID."
+        },
+        "title": {
+          "type": "string",
+          "description": "Habit title."
+        },
+        "category": {
+          "type": "string",
+          "enum": ["FOCUS", "HEALTH", "WELLNESS", "LEARNING", "PERSONAL", "REST"],
+          "description": "Habit category."
+        },
+        "targetDaysPerWeek": {
+          "type": "integer",
+          "description": "Weekly target frequency (1..7)."
+        },
+        "reminderTimeMinute": {
+          "type": "integer",
+          "description": "Preferred daily cue minute from midnight."
+        },
+        "completedDates": {
+          "type": "array",
+          "description": "Bounded list of yyyy-MM-dd dates when habit was completed."
+        },
+        "createdDateKey": {
+          "type": "string",
+          "description": "Date key yyyy-MM-dd when habit tracking started."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server creation timestamp (FieldValue.serverTimestamp())."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server update timestamp (FieldValue.serverTimestamp())."
+        }
+      },
+      "required": [
+        "userId",
+        "title",
+        "category",
+        "targetDaysPerWeek",
+        "reminderTimeMinute",
+        "completedDates",
+        "createdDateKey",
+        "createdAt",
+        "updatedAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "Authenticated user's profile and planner preferences."
+    },
+    "/users/{userId}/activities/{activityId}": {
+      "schema": { "$ref": "#/entities/RoutineActivity" },
+      "description": "User's scheduled daily routine activities keyed by dateKey."
+    },
+    "/users/{userId}/habits/{habitId}": {
+      "schema": { "$ref": "#/entities/DailyHabit" },
+      "description": "User's recurring habits and completion history."
+    }
+  }
+}
