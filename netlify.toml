@@ -1,0 +1,10 @@
+[build]
+  publish = "netlify"
+  command = "mkdir -p netlify && if [ -f .build-outputs/app-debug.apk ]; then cp .build-outputs/app-debug.apk netlify/MyDailyRoutine-v1.0.apk; fi"
+
+[[headers]]
+  for = "/*.apk"
+  [headers.values]
+    Content-Type = "application/vnd.android.package-archive"
+    Content-Disposition = "attachment; filename=\"MyDailyRoutine-v1.0.apk\""
+    X-Content-Type-Options = "nosniff"
